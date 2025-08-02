@@ -35,10 +35,10 @@ class SignUp(StylesMixin, forms.ModelForm):
     
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        password_exists = User.objects.filter(password=password).exists()
+        # password_exists = User.objects.filter(password=password).exists()
         error_list = []
-        if password_exists:
-            error_list.append("Password already exists")
+        # if password_exists:
+        #     error_list.append("Password already exists")
         if len(password) < 8:
             error_list.append("Password must be at least 8 characters")
         if password.isnumeric():

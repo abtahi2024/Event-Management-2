@@ -8,6 +8,8 @@ from django.conf import settings
 @receiver(post_save, sender=User)
 def send_activation_email(sender, instance, created, **kwargs):
     if created:
+        participant_group, _ = Group.objects.get_or_create(name='Participant')
+        instance.groups.add(participant_group)
         token = default_token_generator.make_token(instance)
         activation_url = f"{settings.FRONTEND_URL}/users/activate/{instance.id}/{token}"
         subject = "Activate your EventSync Account"
