@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="UTF-8" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+		<title>Log In</title>
+	</head>
+	<body class="bg-slate-950 space-y-16 font-['Montserrat']">
+		<header>
+            <nav class="flex items-center justify-around px-16 py-6 text-slate-100 bg-black">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="38">
+                        <h2 class="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-rose-500 to-yellow-500 text-transparent bg-clip-text">Event Management</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-5 text-xl font-medium">
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "land" %}">Home</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-sky-400 to-sky-400 hover:text-white"><a href="">Contact</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Log In</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "sign-up" %}">Sign Up</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-rose-600 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Log Out</li>
+                </ul>
+            </nav>
+        </header>
+		<main class="m-16">
+			<form method="POST" class="space-y-4 bg-gradient-to-br from-rose-700 via-purple-700 to-pink-700 rounded-xl mx-auto px-10 py-6 w-fit">
+				{% if messages %}
+				{% for message in messages %}
+				<h5 class="px-4 py-2 text-2xl font-medium bg-green-400 text-black"><span class="fas fa-check-circle"></span> {{ message }}</h5>
+				{% endfor %}
+				{% endif %}
+				<h2 class="text-4xl text-center  text-cyan-300 font-bold pb-3">Log In</h2>
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+					<label for="{{ field.id_for_label }}" class="text-slate-100 text-xl font-medium mr-2">{{ field.label }}:</label>
+					{{ field }}
+					<br/>
+					{% if field.errors %}
+					<ul>
+						{% for error in field.errors %}
+						<li class="text-lg text-white font-medium">{{ error }}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</p>
+				{% endfor %}
+				{% if form.non_field_errors %}
+				<ul>
+					{% for error in form.non_field_errors %}
+					<li class="text-lg text-red-400 font-medium">{{ error }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+				<div class="flex justify-center">
+					<button type="submit" class="my-2 px-6 py-2 bg-sky-500/100 hover:bg-rose-500/45 text-slate-100 hover:text-slate-300 font-semibold text-2xl rounded-lg">Login</button>
+				</div>
+				<p class="text-lg text-white">Don't have an account? Then:-  <a href="{% url "sign-up" %}" class="bg-purple-400 shadow-lg shadow-blue-500/25 px-2 py-2 rounded-md">Sign Up</a></p>
+			</form>
+		</main>
+	</body>
+</html>

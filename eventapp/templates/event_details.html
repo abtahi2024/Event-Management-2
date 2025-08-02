@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+        <title>{{event.category.name}} Event</title>
+
+    </head>
+    <body class="bg-slate-950 text-white">
+        <header>
+            <nav class="bg-black flex items-center justify-around px-12 py-6 ">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="35">
+                        <h2 class="text-3xl font-extrabold tracking-wide bg-gradient-to-r from-yellow-500 to-rose-500 text-transparent bg-clip-text">Event Management</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-6 text-xl font-medium">
+                    {% if user.is_authenticated %}
+                    <li class="rounded-md px-2 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Home</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "dashboard" %}">Dashboard</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-cyan-300 to-sky-500 hover:text-white"><a href="">Contact</a></li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="rounded-md px-3 py-2 text-sm font-medium text-rose-500 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Logout</button>
+                    </form>
+                    {% else %}
+                    <li class="font-bold"><a href="">Home</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-rose-500 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "login" %}">Login</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "sign-up" %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="m-6 md:mx-20 md:my-12 space-y-10 bg-gradient-to-tr from-rose-500 to-purple-500 px-3 py-3">
+                <img src={{event.thumb.url}} alt="Thumbnail" class="w-50 rounded-lg">
+                <h2 class="text-3xl font-bold text-black">{{event.name}}</h2>
+                <p class="text-2xl text-black"><span class="font-semibold text-black">Description:</span><br/>{{event.description}}</p>
+                <h5 class="text-2xl space-x-2 text-black">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span class="font-medium">Event Due Date:</span> <span class="">{{event.date}}</span>
+                </h5>
+                <h5 class="text-2xl space-x-2 text-black">
+                    <i class="fa-solid fa-clock"></i>
+                    <span class="font-medium">Event Due Time:</span> <span class="">{{event.time}}</span>
+                </h5>
+                <h5 class="text-2xl space-x-2 text-black">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span class="font-medium">Event Due Location:</span> <span class="">{{event.location}}</span>
+                </h5>
+                <h5 class="text-2xl space-x-2 text-black">
+                    <i class="fa-solid fa-table-list"></i>
+                    <span class="font-medium">Event's Category:</span> <span class="">{{event.category.name}}</span>
+                </h5>
+                <div class="text-3xl text-black">
+                    <i class="fa-solid fa-users-line mb-4"></i>
+                    <span class="font-medium pl-2 mb-4">Participants &lpar;{{ event.partice_count }}&rpar;:</span><br/>
+                    <div class="space-y-4">
+                        {% for partice in participants %}
+                        <p class="space-x-4 text-2xl"><i class="fa-solid fa-user text-xl"></i> {{partice.get_full_name}} &lpar;{{partice.username}}&rpar;</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </main>
+            <footer class="bg-black p-10 md:p-20 space-y-20 mt-20">
+                <div class="flex flex-col lg:flex-row justify-between gap-10 lg:gap-0">
+                    <div class="flex items-center gap-3">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="36">
+                        <h3 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">Event Management</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-lg">
+                    <div>
+                        <h6 class="text-xl font-bold mb-4">Quick Links</h6>
+                        <ul class="space-y-2">
+                            <li class="hover:font-semibold hover:scale-105 transition">Home</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Contact Us</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Dashboard</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Events</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h6 class="text-xl font-bold mb-4">About Us</h6>
+                        <ul class="space-y-2">
+                            <li class="hover:font-semibold hover:scale-105 transition">Our Team</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Blogs</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Courses</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Development Repo</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">More Products</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h6 class="text-xl font-bold mb-4">Legal</h6>
+                        <ul class="space-y-2">
+                            <li class="hover:font-semibold hover:scale-105 transition">Terms & Conditions</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Privacy Policy</li>
+                            <li class="hover:font-semibold hover:scale-105 transition">Fund Policy</li>
+                        </ul>
+                    </div>
+        
+                </div>
+        </footer>
+    </body>
+</html>

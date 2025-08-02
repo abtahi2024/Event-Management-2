@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="icon" href="https://cdn-icons-png.freepik.com/512/1464/1464174.png" type="image/x-icon">
+        <script src="https://cdn.tailwindcss.com/"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <title></title>
+        <style>
+            nav > ul > li:hover ul {
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-900 text-slate-100 font-['Montserrat']">
+        <header>
+            <nav class="flex items-center justify-around px-16 py-6 bg-black">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="" width="">
+                        <h2 class="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-yellow-500 to-rose-500 text-transparent bg-clip-text">Event Managments</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-4 text-xl font-medium">
+                    {% if user.is_authenticated %}
+                    <li class=""><a href="">Home</a></li>
+                    <li class=""><a href="{% url "dashboard" %}">Dashboard</a></li>
+                    <li class=""><a href="">Contact</a></li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-400 rounded-md">Logout</button>
+                    </form>
+                    {% else %}
+                    <li class="font-bold"><a href="">Home</a></li>
+                    <li class="hover:font-semibold"><a href="{% url "login" %}">Login</a></li>
+                    <li class="hover:font-semibold"><a href="{% url "sign-up" %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main class="mx-6 md:mx-20 my-12"></main>
+    </body>
+</html>

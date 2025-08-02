@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Create/Update an Event</title>
+        <style>
+            p {
+                gap: 1rem;
+            }
+            p label {
+                font-size: x-large;
+                color:RGB(0 243 255);
+
+            }
+        </style>
+    </head>
+    <body class="bg-zinc-900 text-white">
+        <header>
+            <nav class="flex items-center justify-around px-16 py-6 bg-black">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="40">
+                        <h2 class="text-3xl font-extrabold bg-gradient-to-r from-yellow-500 to-rose-500 bg-clip-text text-transparent">Event Management</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-6 text-xl font-medium">
+                    {% if user.is_authenticated %}
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Home</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "dashboard" %}">Dashboard</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Contact</a></li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="rounded-md px-3 py-2 text-sm font-medium text-rose-400 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Logout</button>
+                    </form>
+                    {% else %}
+                    <li class="font-bold"><a href="">Home</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-rose-400 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "login" %}">Login</a></li>
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="{% url "sign-up" %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main class="max-w-2xl mx-auto px-1 py-1">
+            <form method="POST" enctype="multipart/form-data" class="bg-gradient-to-tr from-slate-900 to-blue-500 p-8 rounded-xl shadow-lg space-y-6 px-3 py-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="px-6 py-2 bg-rose-600 hover:bg-blue-500 font-medium rounded-lg text-2xl">Confirm</button>
+                {% if messages %}
+                    {% for message in messages %}
+                        <h4 class="text-white font-semibold text-lg px-6 py-2 w-fit mx-auto rounded-lg {% if message.tags == 'success' %}bg-green-400{% endif %} {% if message.tags == 'error' %}bg-red-600{% endif %}">{{ message }}</h4>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </main>
+  <footer class="bg-black p-10 md:p-20 space-y-20 mt-20">
+        <div class="flex flex-col lg:flex-row justify-between gap-10 lg:gap-0">
+            <div class="flex items-center gap-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="36">
+                <h3 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">Event Management</h3>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-lg">
+            <div>
+                <h6 class="text-xl font-bold mb-4">Quick Links</h6>
+                <ul class="space-y-2">
+                    <li class="hover:font-semibold hover:scale-105 transition">Home</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Contact Us</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Dashboard</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Events</li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-xl font-bold mb-4">About Us</h6>
+                <ul class="space-y-2">
+                    <li class="hover:font-semibold hover:scale-105 transition">Our Team</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Blogs</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Courses</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Development Repo</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">More Products</li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-xl font-bold mb-4">Legal</h6>
+                <ul class="space-y-2">
+                    <li class="hover:font-semibold hover:scale-105 transition">Terms & Conditions</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Privacy Policy</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Fund Policy</li>
+                </ul>
+            </div>
+  
+        </div>
+    </footer>
+    </body>
+</html>

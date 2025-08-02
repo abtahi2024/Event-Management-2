@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <title>Create/Update Category | EventSync</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        p {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        p label {
+            font-size: 1.25rem;
+            color:RGB(0 200 251);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-950 to-black text-slate-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="  bg-black">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="{% url 'land' %}" class="flex items-center gap-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" class="w-10 h-10" alt="logo">
+                <span class="text-3xl font-extrabold bg-gradient-to-r from-yellow-500 to-rose-500 bg-clip-text text-transparent">
+                    Event Management
+                </span>
+            </a>
+            <ul class="flex items-center gap-6 text-lg">
+                {% if user.is_authenticated %}
+                    <li><a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Home</a></li>
+                    <li><a href="{% url 'dashboard' %}" class="rounded-md px-2 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-sky-600 to-green-400 hover:text-white">Dashboard</a></li>
+                    <li><a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Contact</a></li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-500 rounded-md px-3 py-2 text-sm font-medium hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Logout</button>
+                    </form>
+                {% else %}
+                    <li><a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Home</a></li>
+                    <li><a href="{% url 'login' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Login</a></li>
+                    <li><a href="{% url 'sign-up' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Form Section -->
+    <main class="px-4 py-6 max-w-xl mx-auto">
+        <form method="POST" class="bg-gradient-to-tr from-pink-500 to-sky-700 p-8 rounded-2xl shadow-lg space-y-6">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="px-6 py-2 bg-rose-500 hover:bg-blue-500 font-semibold text-xl rounded-lg transition duration-200">
+                Confirm
+            </button>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="mt-4 text-white text-center font-semibold text-lg py-2 px-4 w-fit mx-auto rounded-lg 
+                    {% if message.tags == 'success' %}bg-green-500
+                    {% elif message.tags == 'error' %}bg-red-500
+                     {% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black p-10 md:p-20 space-y-20 mt-20">
+        <div class="flex flex-col lg:flex-row justify-between gap-10 lg:gap-0">
+            <div class="flex items-center gap-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="36">
+                <h3 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">Event Management</h3>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-lg">
+            <div>
+                <h6 class="text-xl font-bold mb-4">Quick Links</h6>
+                <ul class="space-y-2">
+                    <li class="hover:font-semibold hover:scale-105 transition">Home</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Contact Us</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Dashboard</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Events</li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-xl font-bold mb-4">About Us</h6>
+                <ul class="space-y-2">
+                    <li class="hover:font-semibold hover:scale-105 transition">Our Team</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Blogs</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Courses</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">Development Repo</li>
+                    <li class="hover:font-semibold hover:scale-105 transition">More Products</li>
+                </ul>
+            </div>
+  
+        </div>
+    </footer>
+
+</body>
+</html>

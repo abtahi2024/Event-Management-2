@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2206/2206368.png" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+        <script src="https://cdn.tailwindcss.com/"></script>
+        <title>Create New Group</title>
+        <style>
+            nav > ul > li:hover ul {
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-950 text-slate-100 font-['Montserrat']">
+         <header>
+            <nav class="flex items-center justify-around px-10 py-6 bg-black">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="38">
+                        <h2 class="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-rose-500 to-yellow-500 text-transparent bg-clip-text">Event Management</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-6 text-xl font-medium">
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Dashboard</a> <span class="fas fa-caret-down"></span></li>
+                    <li class="cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Groups <span class="fas fa-caret-down"></span>
+                        <ul class="bg-slate-950 bg-opacity-75 border-2 rounded-lg mt-1 py-2 hidden absolute">
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-group" %}" target="_blank">View All</a></li>
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "create-group" %}" target="_blank">Create New</a></li>
+                        </ul>
+                    </li>
+                    <li class="cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Manage <span class="fas fa-caret-down"></span>
+                        <ul class="bg-slate-950 bg-opacity-75 border-2 rounded-lg mt-1 py-2 hidden absolute">
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-event" %}" target="_blank">Events</a></li>
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-category" %}" target="_blank">Categories</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <form method="POST" class="space-y-4 border border-black bg-gradient-to-t from-rose-500 to-purple-500 rounded-xl mx-auto p-8 w-fit mt-16 mb-6 flex flex-col items-center">
+                {% if messages %}
+                {% for message in messages %}
+                <h5 class="px-4 py-1 text-2xl font-medium bg-green-400 text-black"><span class="fas fa-check-circle"></span> {{ message }}</h5>
+                {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                {% for field in form %}
+                <p class="">
+                    <label for="{{ field.id_for_label }}" class="text-xl font-bold mr-4 text-black">{{ field.label }}:</label>
+                    {{ field }}
+                </p>
+                {% endfor %}
+                <button type="submit" class="mt-5 px-5 py-2 bg-sky-500 hover:bg-red-700 text-white font-semibold text-2xl rounded-lg">Confirm</button>
+            </form>
+        </main>
+    </body>
+</html>

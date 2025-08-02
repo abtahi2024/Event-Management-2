@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+        <script src="https://cdn.tailwindcss.com/"></script>
+        <title>Organizer Dashboard</title>
+        <style>
+            nav > ul > li:hover ul {
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="bg-gray-900 text-slate-100 font-['Montserrat']">
+        <header>
+            <nav class="flex items-center justify-around px-10 py-6 bg-black">
+                <a href="{% url "land" %}">
+                    <div class="title flex items-center gap-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" width="38">
+                        <h2 class="text-2xl font-extrabold tracking-wide bg-gradient-to-r from-rose-500 to-yellow-500 text-transparent bg-clip-text">Event Management</h2>
+                    </div>
+                </a>
+                <ul class="flex gap-6 text-xl font-medium">
+                    <li class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><a href="">Dashboard</a> <span class="fas fa-caret-down"></span></li>
+                    <li class="cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Groups <span class="fas fa-caret-down"></span>
+                        <ul class="bg-slate-950 bg-opacity-75 border-2 rounded-lg mt-1 py-2 hidden absolute">
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-group" %}" target="_blank">View All</a></li>
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "create-group" %}" target="_blank">Create New</a></li>
+                        </ul>
+                    </li>
+                    <li class="cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Manage <span class="fas fa-caret-down"></span>
+                        <ul class="bg-slate-950 bg-opacity-75 border-2 rounded-lg mt-1 py-2 hidden absolute">
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-event" %}" target="_blank">Events</a></li>
+                            <li class="hover:bg-slate-800 px-5 py-2"><a href="{% url "view-category" %}" target="_blank">Categories</a></li>
+                        </ul>
+                    </li>
+                    <form action="{% url "logout" %}" method="POST">
+                        {% csrf_token %}
+                        <li class="rounded-md px-3 py-2 text-sm font-medium text-rose-500 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white"><button type="submit">Log Out</button></li>
+                    </form>
+                </ul>
+            </nav>
+        </header>
+        <main class="space-y-16 mx-6 lg:mx-40 mt-8 mb-8">
+            <div class="flex items-end justify-center gap-5">
+                <img src="https://cdn-icons-png.flaticon.com/512/2389/2389243.png" width="45">
+                <h1 class="text-3xl bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text font-bold mt-4">Organizer {{ user.username|slice:':15' }}'s Dashboard</h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2">
+                <div class="p-4 lg:p-8 bg-gradient-to-tr from-pink-500 to-purple-500 border-2 border-black rounded-md">
+                    <a href="{% url 'organizer-dashboard' %}?type=all" class="flex justify-between gap-4 mb-6">
+                        <h4 class="text-2xl lg:text-3xl font-semibold">TOTAL EVENTS</h4>
+                        <i class="fa-solid fa-calendar-week text-3xl"></i>
+                    </a>
+                    <h3 class="text-3xl lg:text-3xl w-12 lg:w-16 h-12 lg:h-16 rounded-full bg-white text-black font-bold grid place-items-center">{{ total_events.counter }}</h3>
+                </div>
+                <div class="p-4 lg:p-4 bg-gradient-to-br from-blue-400 to-cyan-400 border-2 border-black rounded-md">
+                    <a href="" class="flex justify-between gap-4 mb-6">
+                        <h4 class="text-2xl lg:text-3xl  font-semibold">TOTAL PARTICIPANTS</h4>
+                        <i class="fa-solid fa-users-line text-3xl text-blue-800"></i>
+                    </a>
+                    <h3 class="text-3xl lg:text-5xl w-12 lg:w-16 h-12 lg:h-16 rounded-full bg-red-500 text-white font-bold grid place-items-center">0</h3>
+                </div>
+                <div class="p-4 lg:p-8 bg-gradient-to-r from-orange-500 to-purple-400 border-2 border-black rounded-md">
+                    <a href="{% url 'organizer-dashboard' %}?type=upcoming" class="flex justify-between gap-4 mb-6">
+                        <h4 class="text-2xl lg:text-2xl font-bold">UPCOMING EVENTS</h4>
+                        <i class="fa-solid fa-calendar-plus text-3xl"></i>
+                    </a>
+                    <h3 class="text-4xl lg:text-5xl w-12 lg:w-16 h-12 lg:h-16 rounded-full bg-white text-slate-900 font-semibold grid place-items-center">{{ upcoming_events.counter }}</h3>
+                </div>
+                <div class="p-4 lg:p-8 bg-gradient-to-r from-pink-500 to-rose-500 border-2 border-black rounded-md">
+                    <a href="{% url 'organizer-dashboard' %}?type=past" class="flex justify-between gap-4 mb-6">
+                        <h4 class="text-2xl lg:text-3xl font-bold">PAST EVENTS</h4>
+                        <i class="fa-solid fa-calendar-check text-3xl"></i>
+                    </a>
+                    <h3 class="text-4xl lg:text-5xl w-12 lg:w-16 h-12 lg:h-16 rounded-full bg-white text-black font-semibold grid place-items-center">{{ past_events.counter }}</h3>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {% for event in events %}
+                    <div class="p-8 bg-gradient-to-tr from-sky-500 to-blue-500 rounded-xl border border-slate-600 space-y-4">
+                        <h3 class="text-4xl font-medium">{{ event.name }}</h3>
+                        <p class="text-xl text-black"><span class="font-bold">Description:</span> {{ event.description|slice:":50" }}...</p>
+                        <h5 class="text-2xl text-black">Location: <span >{{ event.location }}</span></h5>
+                        <h5 class="text-2xl">Category: <span>{{ event.category.name }}</span></h5>
+                        <div class="flex justify-end">
+                            <button type="button" class="font-semibold text-xl bg-rose-500 hover:bg-blue-500 rounded-md px-2 py-2"><a href="{% url "event-details" event.id %}" target="_blank">More Info</a></button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

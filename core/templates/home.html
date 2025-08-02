@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Event management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1646/1646646.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Header -->
+    <header class="w-full bg-black shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
+            <a href="{% url 'land' %}" class="flex items-center gap-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/17870/17870252.png" class="w-11 h-11">
+                <span class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-pink-500">Event Management</span>
+            </a>
+            <button class="md:hidden block text-white focus:outline-none" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="mobileMenu" class="md:flex hidden flex-col md:flex-row gap-4 mt-4 md:mt-0 text-base font-medium">
+                <li><a href="#" class="rounded-md px-2 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-sky-600 to-green-400 hover:text-white">Home</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Dashboard</a></li>
+                <li><a href="{% url 'organizer-dashboard' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Organizer Dashboard</a></li>
+                <li><a href="{% url 'view-event' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Events</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="POST" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="rounded-md px-0 py-0.5 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Logout</button>
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="rounded-md px-0.5 py-0.5 hover:bg-gradient-to-tr from-rose-600 to-pink-600 hover:text-white">Login</a></li>
+                <li><a href="{% url 'sign-up' %}" class="rounded-md px-0.5 py-0.5 hover:bg-gradient-to-tr from-teal-300 to-teal-500 hover:text-white">sing up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-6 py-16 space-y-16">
+        <section class="text-center space-y-6">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-yellow-500">Welcome, {{ user.username }}</h1>
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-white">
+                Your all-in-one platform to organize events, manage schedules, and elevate experiences. Let’s make your next event unforgettable.
+            </p>
+        </section>
+
+        <!-- Banner Section -->
+        <section class="flex flex-col md:flex-row gap-10 items-center justify-between">
+            <div class="w-full md:w-1/2 space-y-5">
+                <h2 class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-yellow-500">Event Management</h2>
+                <p class="text-white leading-relaxed text-sm sm:text-base">
+                    Event management is the process of planning and hosting a variety of public and private events for social or business purposes... (trimmed for brevity)
+                </p>
+                <a href="{% url 'admin-dashboard' %}" class="inline-block mt-4 px-6 py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg transition">Get Started</a>
+            </div>
+            <div class="w-full md:w-1/2 space-y-3">
+                <img src="https://media.istockphoto.com/id/610408148/photo/event-planning.jpg?s=1024x1024&w=is&k=20&c=k1zzsHI379oHmmgXQEkP72Oypi-Ak4DOBuM_Ldq-LtQ=" class="rounded-lg shadow-lg w-full">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <img src="https://img.freepik.com/free-photo/group-people-working-out-business-plan-office_1303-15867.jpg" class="w-full sm:w-1/2 rounded-lg shadow">
+                    <img src="https://www.slideegg.com/image/catalog/477346-event-management-business-plan.png" class="w-full sm:w-1/2 rounded-lg shadow">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-16 mt-20">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 text-sm text-slate-300">
+            <div>
+                <h3 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">Event Management</h3>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero quia explicabo molestiae dolores ut voluptates itaque cumque, nihil illo amet vitae molestias? Quam, assumenda odit. Inventore iusto tenetur accusamus. Nam.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-100 mb-3">Navigate</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Home</a></li>
+                    <li><a href="#" class="hover:text-white">Dashboard</a></li>
+                    <li><a href="#" class="hover:text-white">Pricing</a></li>
+                    <li><a href="#" class="hover:text-white">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-100 mb-3">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">About</a></li>
+                    <li><a href="#" class="hover:text-white">Team</a></li>
+                    <li><a href="#" class="hover:text-white">Careers</a></li>
+                    <li><a href="#" class="hover:text-white">Partners</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-100 mb-3">Connect</h4>
+                <div class="flex gap-4 text-2xl">
+                    <a href="abtahi" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-sky-400"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-500"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/abtahi2024" class="hover:text-sky-400"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
