@@ -27,6 +27,8 @@ def sign_up(request):
             user.set_password(form.cleaned_data.get('password'))
             user.is_active = False
             user.save()
+            group, created = Group.objects.get_or_create(name='Participant')
+            user.groups.add(group)
             messages.success(request, "A Verification Mail has been sent to your Email. Please check.")
             return redirect('login')
     return render(request, "registration/sign_up.html", {'form': form})
