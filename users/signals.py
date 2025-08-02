@@ -21,7 +21,7 @@ def send_activation_email(sender, instance, created, **kwargs):
             name = instance.last_name
         else:
             name = instance.username
-        message = f"Hi {name},\n\nThank you for signing up on EventSync. Activate your account by clicking the activation link below:\n{activation_url}\n\nYou can safely ignore this email if you don't want to Sign Up.\n\nBest Regards,\n\nEventSync Business & Dev Team\nSynchronize your Events with care."
+        message = f"Hi {name},\n\nThank you for signing up on Event. Activate your account by clicking the activation link below:\n{activation_url}\n\nYou can safely ignore this email if you don't want to Sign Up.\n\nBest Regards,\n\nEvent Business & Dev Team\nSynchronize your Events with care."
         recipient_list = [instance.email]
         try:
             send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)

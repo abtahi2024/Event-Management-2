@@ -49,11 +49,14 @@ def activate_user(request, user_id, token):
         if default_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
+            messages.success(request,"✅ your account is active.")
             return redirect('login')
         else:
-            return HttpResponse("<h3>Invalid Id or Token ⚠️</h3>")
+            messages.success(request, "<h3>Invalid Id or Token ⚠️</h3>")
+            return redirect('login')
     except User.DoesNotExist:
-        return HttpResponse("<h3>404: Not Found<br/>User Not Found ⚠️</h3>")
+        messages.success(request, "<h3>404: Not Found<br/>User Not Found ⚠️</h3>")
+        return redirect('login')
 
 
 @login_required
