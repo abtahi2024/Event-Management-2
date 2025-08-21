@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'events_management.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://events_db_0cbn_user:qsumkeN9TL4gfWPJA0VSWNDZe7z10NfS@dpg-d1r5ms3e5dus73ea9o1g-a.oregon-postgres.render.com/events_db_0cbn',
+        default='postgresql://mid_term18_user:1wg57trWoLz3dyVEBGuqkoq4ZUsObcH6@dpg-d2h0irndiees73e0vifg-a.oregon-postgres.render.com/mid_term18',
         conn_max_age=600
     )
 }
